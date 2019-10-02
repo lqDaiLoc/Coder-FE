@@ -68,17 +68,17 @@ class CameraTuSuong extends React.Component {
         alert("Khong up dc anh");
         })
         
-        count = this.state.arrInfoImage.length;
-        firebaseApp.database().ref('InfoImage/' + count).set({
-            LocaltionX: 123,
-            LocaltionY: 123,
-            Status: "NoCheck",
-            NameUri: name,
-            allow: "False"     
-        })
-        .catch((error) => {
-            alert("khong up dc real time")
-        })
+        // count = this.state.arrInfoImage.length;
+        // firebaseApp.database().ref('InfoImage/' + count).set({
+        //     LocaltionX: 123,
+        //     LocaltionY: 123,
+        //     Status: "NoCheck",
+        //     NameUri: name,
+        //     allow: "False"     
+        // })
+        // .catch((error) => {
+        //     alert("khong up dc real time")
+        // })
         
     }
     setCameraType = (cameraType) => {

@@ -14,6 +14,8 @@ import CameraCMND from '../components/camera.cmnd'
 import FinishScreen from '../screens/FinishScreen';
 import LoginScreen from '../screens/LoginScreen';
 import CreateAccountScreen from '../screens/CreateAccountScreen';
+import DongYScreen from '../screens/DongYScreen';
+import ThatBaiScreen from '../screens/ThatBaiScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -22,17 +24,19 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Login: LoginScreen,
-    CreateAccount: CreateAccountScreen,
-    Home: HomeScreen,
-    Info: InfoScreen,
-    ChiTiet: ChiTietVayScreen, 
-    Camera: CameraScreen,
-    CameraTuSuong: CameraTuSuong,
-    CameraCMND: CameraCMND,
-    //test: testScreem,
-    KiemTraHoSo: KiemTraHoSoScreen,
-    Finish: FinishScreen,
+    // Login: LoginScreen,
+    // CreateAccount: CreateAccountScreen,
+    // Home: HomeScreen,
+    // Info: InfoScreen,
+    // ChiTiet: ChiTietVayScreen, 
+    // Camera: CameraScreen,
+    // CameraTuSuong: CameraTuSuong,
+    // CameraCMND: CameraCMND,
+    // //test: testScreem,
+    // KiemTraHoSo: KiemTraHoSoScreen,
+    //Finish: FinishScreen,
+    // DongY: DongYScreen,
+    ThatBai: ThatBaiScreen
   },
   config
 );

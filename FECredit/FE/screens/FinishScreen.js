@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
-import { TouchableOpacity, StyleSheet, Text, View, DatePickerAndroid, Image, ActivityIndicator  } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, Image, ActivityIndicator, Alert, ImageBackground } from 'react-native';
 import firebaseApp from '../FirebaseIndex';
 //import * as firebase from 'firebase'
 import '@firebase/firestore';
@@ -15,56 +15,48 @@ class FinishScreen extends React.Component {
     }
     componentDidMount = async () => {
         // alert(this.props.NameImageFirebase)
-        const { arrInfoImage } = this.state;
+        // this.props.navigation.navigate('CreateAccount');
+        setTimeout(async () => {
+            const ref = firebaseApp.database().ref('InfoImage');
+            await ref.once('value', snapshot => {
+                const val = snapshot.val();
+                this.setState({ arrInfoImage: val });
+            })
+                .catch((error) => {
+                    console.log(error)
+                });
+            if (this.state.arrInfoImage[this.state.arrInfoImage.length - 1].Status == 'Check') {
+                if (this.state.arrInfoImage[this.state.arrInfoImage.length - 1].allow === 'true') {
+                    this.props.navigation.navigate('DongY');
+                } else {
+                    this.props.navigation.navigate('ThatBai');
+                }
+            }
+        }, 90000);
+        //await alert(this.state.arrInfoImage[this.state.arrInfoImage.length - 1].Status);
+        
+    }
+    async Tuchay() {
         const ref = firebaseApp.database().ref('InfoImage');
-        await ref.once('value', snapshot => {
+        await ref.on('value', snapshot => {
             const val = snapshot.val();
             this.setState({ arrInfoImage: val });
-            //alert(this.state.arrInfoImage[this.state.arrInfoImage.length - 1].NameUri);
-            //alert(this.state.arrInfoImage.length);
         })
-        .catch((error)=>{
-            console.log(error)
-        });
-        //await alert(this.state.arrInfoImage[this.state.arrInfoImage.length - 1].Status);
-        if(this.state.arrInfoImage[this.state.arrInfoImage.length - 1].Status === 'NoCheck'){
-            this.setState({check: true});
-        }else{
-            this.setState({check: false});
-        }
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //////                                                                                                                  /////
-        //////  anh Sieu cho em hoi lam sao de em check duoc cai Status trong arrInfoImage de show View theo nó vậy anh         /////
-        //////            em thử làm như thế này nhưng lỗi ạ                                                                    /////
-        //////            render(){                                                                                             /////
-        //////            if(this.state.arrInfoImage[this.state.arrInfoImage.length - 1].Status === 'NoCheck'){                 /////
-        //////                <View>                                                                                            /////
-        //////                    <ActivityIndicator/>                                                                          /////
-        //////                </View>                                                                                           /////
-        //////            }else{                                                                                                /////
-        //////                <View>abcxyz</View>                                                                               /////
-        //////            }                                                                                                     /////
-        //////        }                                                                                                         /////
-        //////                                                                                                                  /////
-        //////            render(){                                                                                             /////
-        //////            if(this.state.check){                                                                                 /////
-        //////                <View>                                                                                            /////
-        //////                    <ActivityIndicator/>                                                                          /////
-        //////                </View>                                                                                           /////
-        //////            }else{                                                                                                /////
-        //////                <View>abcxyz</View>                                                                               /////
-        //////            }                                                                                                     /////
-        //////        }       
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
+            .catch((error) => {
+                console.log(error)
+            });
     }
     render() {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator />
-            </View>
+            <ImageBackground source={require('../assets/images/wait1.jpg')} style={{ flex: 1, width: '100%', height: '100%', flexDirection: 'row' }}>
+                <View style={{flex: 0.4}}></View>
+                <View style={{flex: 0.6,marginTop: 50, alignItems: "center"}}>
+                    <Text style={{ fontSize: 30, color: '#CD950C' }}>WAIT</Text>
+                    <Text>Xin đợi trong giây lát</Text>
+                    <Text>Hồ sơ của bạn đang được sử lý</Text>
+                    <ActivityIndicator size = 'large' style={{ marginTop: 20 }}/>
+                </View>
+            </ImageBackground>
         )
     }
 }
